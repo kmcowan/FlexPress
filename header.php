@@ -1,5 +1,3 @@
-<?php
-?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -11,7 +9,7 @@
 <?php wp_body_open(); ?>
 
 <div id="page" class="site">
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header <?php echo get_theme_mod('header_bg_image', '') ? 'has-header-bg-image' : ''; ?>">
         <div class="container">
             <?php
             $header_layout = get_theme_mod('header_layout', 'centered');

@@ -1,11 +1,4 @@
 <?php
-/**
- * Theme Name: FlexPress
- * Description: A super-intuitive WordPress theme with advanced customization options
- * Version: 1.0
- * Author: Your Name
- */
-// Theme Setup
 function flexpress_setup() {
     // Add theme support
     add_theme_support('title-tag');
@@ -34,6 +27,11 @@ function flexpress_scripts() {
     wp_add_inline_style('flexpress-main', $custom_css);
 
     wp_enqueue_script('flexpress-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
+
+    // Add smooth scroll if enabled
+    if (get_theme_mod('enable_smooth_scroll', true)) {
+        wp_add_inline_script('flexpress-main', 'document.documentElement.classList.add("smooth-scroll");', 'before');
+    }
 }
 add_action('wp_enqueue_scripts', 'flexpress_scripts');
 
@@ -123,27 +121,163 @@ function flexpress_customize_register($wp_customize) {
         'panel' => 'flexpress_colors',
     ));
 
-    // Body Background
+    // Body Background Color
     $wp_customize->add_setting('body_bg_color', array(
         'default' => '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'body_bg_color', array(
-        'label' => __('Body Background', 'flexpress'),
+        'label' => __('Body Background Color', 'flexpress'),
         'section' => 'flexpress_bg_colors',
     )));
 
-    // Header Background
+    // Body Background Image
+    $wp_customize->add_setting('body_bg_image', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'body_bg_image', array(
+        'label' => __('Body Background Image', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'description' => __('Upload a background image for the body', 'flexpress'),
+    )));
+
+    // Body Background Image Settings
+    $wp_customize->add_setting('body_bg_repeat', array(
+        'default' => 'repeat',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('body_bg_repeat', array(
+        'label' => __('Body Background Repeat', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'no-repeat' => 'No Repeat',
+            'repeat' => 'Repeat',
+            'repeat-x' => 'Repeat Horizontally',
+            'repeat-y' => 'Repeat Vertically',
+        ),
+    ));
+
+    $wp_customize->add_setting('body_bg_position', array(
+        'default' => 'center center',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('body_bg_position', array(
+        'label' => __('Body Background Position', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'left top' => 'Left Top',
+            'center top' => 'Center Top',
+            'right top' => 'Right Top',
+            'left center' => 'Left Center',
+            'center center' => 'Center Center',
+            'right center' => 'Right Center',
+            'left bottom' => 'Left Bottom',
+            'center bottom' => 'Center Bottom',
+            'right bottom' => 'Right Bottom',
+        ),
+    ));
+
+    $wp_customize->add_setting('body_bg_size', array(
+        'default' => 'auto',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('body_bg_size', array(
+        'label' => __('Body Background Size', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'auto' => 'Auto',
+            'cover' => 'Cover',
+            'contain' => 'Contain',
+        ),
+    ));
+
+    // Header Background Color
     $wp_customize->add_setting('header_bg_color', array(
         'default' => '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_bg_color', array(
-        'label' => __('Header Background', 'flexpress'),
+        'label' => __('Header Background Color', 'flexpress'),
         'section' => 'flexpress_bg_colors',
     )));
+
+    // Header Background Image
+    $wp_customize->add_setting('header_bg_image', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'header_bg_image', array(
+        'label' => __('Header Background Image', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'description' => __('Upload a background image for the header', 'flexpress'),
+    )));
+
+    // Header Background Image Settings
+    $wp_customize->add_setting('header_bg_repeat', array(
+        'default' => 'repeat',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('header_bg_repeat', array(
+        'label' => __('Header Background Repeat', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'no-repeat' => 'No Repeat',
+            'repeat' => 'Repeat',
+            'repeat-x' => 'Repeat Horizontally',
+            'repeat-y' => 'Repeat Vertically',
+        ),
+    ));
+
+    $wp_customize->add_setting('header_bg_position', array(
+        'default' => 'center center',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('header_bg_position', array(
+        'label' => __('Header Background Position', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'left top' => 'Left Top',
+            'center top' => 'Center Top',
+            'right top' => 'Right Top',
+            'left center' => 'Left Center',
+            'center center' => 'Center Center',
+            'right center' => 'Right Center',
+            'left bottom' => 'Left Bottom',
+            'center bottom' => 'Center Bottom',
+            'right bottom' => 'Right Bottom',
+        ),
+    ));
+
+    $wp_customize->add_setting('header_bg_size', array(
+        'default' => 'auto',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('header_bg_size', array(
+        'label' => __('Header Background Size', 'flexpress'),
+        'section' => 'flexpress_bg_colors',
+        'type' => 'select',
+        'choices' => array(
+            'auto' => 'Auto',
+            'cover' => 'Cover',
+            'contain' => 'Contain',
+        ),
+    ));
 
     // 3. TYPOGRAPHY PANEL
     $wp_customize->add_panel('flexpress_typography', array(
@@ -310,6 +444,17 @@ function flexpress_generate_custom_css() {
     $body_bg_color = get_theme_mod('body_bg_color', '#ffffff');
     $header_bg_color = get_theme_mod('header_bg_color', '#ffffff');
 
+    // Background Images
+    $body_bg_image = get_theme_mod('body_bg_image', '');
+    $body_bg_repeat = get_theme_mod('body_bg_repeat', 'repeat');
+    $body_bg_position = get_theme_mod('body_bg_position', 'center center');
+    $body_bg_size = get_theme_mod('body_bg_size', 'auto');
+
+    $header_bg_image = get_theme_mod('header_bg_image', '');
+    $header_bg_repeat = get_theme_mod('header_bg_repeat', 'repeat');
+    $header_bg_position = get_theme_mod('header_bg_position', 'center center');
+    $header_bg_size = get_theme_mod('header_bg_size', 'auto');
+
     // Typography
     $body_font = get_theme_mod('body_font', 'system');
     $heading_font = get_theme_mod('heading_font', 'system');
@@ -333,7 +478,19 @@ function flexpress_generate_custom_css() {
     body {
         background-color: var(--body-bg);
         font-size: var(--body-font-size);
-        font-family: " . flexpress_get_font_family($body_font) . ";
+        font-family: " . flexpress_get_font_family($body_font) . ";";
+
+    // Add body background image if set
+    if (!empty($body_bg_image)) {
+        $css .= "
+        background-image: url('{$body_bg_image}');
+        background-repeat: {$body_bg_repeat};
+        background-position: {$body_bg_position};
+        background-size: {$body_bg_size};
+        background-attachment: fixed;";
+    }
+
+    $css .= "
     }
     
     h1, h2, h3, h4, h5, h6 {
@@ -341,7 +498,18 @@ function flexpress_generate_custom_css() {
     }
     
     .site-header {
-        background-color: var(--header-bg);
+        background-color: var(--header-bg);";
+
+    // Add header background image if set
+    if (!empty($header_bg_image)) {
+        $css .= "
+        background-image: url('{$header_bg_image}');
+        background-repeat: {$header_bg_repeat};
+        background-position: {$header_bg_position};
+        background-size: {$header_bg_size};";
+    }
+
+    $css .= "
     }
     
     .container {
@@ -471,4 +639,13 @@ function flexpress_widgets_init() {
 }
 add_action('widgets_init', 'flexpress_widgets_init');
 
+// Add body classes for background images
+function flexpress_body_classes($classes) {
+    if (get_theme_mod('body_bg_image', '')) {
+        $classes[] = 'has-body-bg-image';
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'flexpress_body_classes');
 ?>

@@ -223,3 +223,27 @@ article:last-child {
 html.smooth-scroll {
     scroll-behavior: smooth;
 }
+
+/* Background Image Enhancements */
+body.has-body-bg-image .site-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.site-header.has-header-bg-image {
+    position: relative;
+}
+
+.site-header.has-header-bg-image .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure text readability on background images */
+.site-header.has-header-bg-image .site-title a,
+.site-header.has-header-bg-image .site-description,
+.site-header.has-header-bg-image .main-navigation a {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}

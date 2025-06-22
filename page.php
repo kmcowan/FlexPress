@@ -1,6 +1,7 @@
 <?php
+// File: page.php
 get_header();
-    ?>
+?>
 
     <main id="primary" class="site-main">
         <?php
@@ -29,4 +30,3 @@ get_header();
 
 <?php
 get_footer();
-?>

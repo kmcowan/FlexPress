@@ -1,5 +1,3 @@
-# FlexPress
-A Flexible WordPress Theme with Built-in Editor
 # FlexPress WordPress Theme
 
 A modern, highly customizable WordPress theme with an intuitive built-in customizer that makes theme customization accessible to everyone.
@@ -115,6 +113,12 @@ flexpress/
 ### Colors & Appearance
 - **Primary Colors**: Set primary, secondary, and accent colors
 - **Background Colors**: Customize body and header backgrounds
+- **Background Images**:
+    - Upload background images for body and header using the Media Library
+    - Control image repeat (no-repeat, repeat, repeat-x, repeat-y)
+    - Set image position (9 position options)
+    - Choose image size (auto, cover, contain)
+    - Body background image is fixed by default for parallax effect
 
 ### Typography
 - **Font Selection**: Choose from system fonts or Google Fonts
@@ -225,8 +229,10 @@ add_image_size('flexpress-thumbnail', 400, 300, true);
 - Primary Color (default: #007cba)
 - Secondary Color (default: #005a87)
 - Accent Color (default: #f0b849)
-- Body Background (default: #ffffff)
-- Header Background (default: #ffffff)
+- Body Background Color (default: #ffffff)
+- Body Background Image with customizable repeat, position, and size options
+- Header Background Color (default: #ffffff)
+- Header Background Image with customizable repeat, position, and size options
 
 ### Typography Options
 - Body Font (12 options including Google Fonts)
@@ -253,6 +259,26 @@ $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'button
     'label' => __('Button Color', 'flexpress'),
     'section' => 'flexpress_primary_colors',
 )));
+```
+
+### Working with Background Images
+
+The theme includes full background image support for both body and header. To add an overlay effect to background images:
+
+```css
+/* Add to your custom CSS */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3); /* 30% black overlay */
+    pointer-events: none;
+    z-index: -1;
+}
+```
 ```
 
 ### Creating Child Themes
@@ -334,10 +360,14 @@ Premium support packages available at [theme website](#).
 - Google Fonts integration
 - Widget areas
 - Multiple layout options
+- **Background image support for body and header**
+    - Media Library integration
+    - Full control over repeat, position, and size
+    - Automatic content overlay for readability
 
 ## Credits
 
-- Developed by: Kevin Cowan / Capture Club LLC
+- Developed by: Your Name
 - Based on WordPress coding standards
 - Google Fonts by Google
 - Inspired by modern web design principles
